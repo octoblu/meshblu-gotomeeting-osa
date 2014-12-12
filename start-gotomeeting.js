@@ -10,11 +10,22 @@ module.exports = (function() {
       self.GoToMeeting = SystemEvents.processes['GoToMeeting'];
 
       self.waitForFirstWindow();
-      GoToMeeting.windows[0].groups[3].buttons[0].click();
+      self.clickMeetNow();
 
       self.waitForSecondWindow();
       self.waitForRecordButton();
       self.startRecording();
+    });
+
+    self.clickMeetNow = (function(){
+      var numButts = self.GoToMeeting.windows[0].groups[3].buttons.length;
+      for(var i=0; i < numButts; i++) {
+        var button = self.GoToMeeting.windows[0].groups[3].buttons[i];
+        if(button.title() === "Meet Now") {
+          self.GoToMeeting.windows[0].groups[3].buttons[0].click();
+          return;
+        }
+      }
     });
 
     self.startRecording = (function() {
