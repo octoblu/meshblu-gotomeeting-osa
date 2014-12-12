@@ -3,11 +3,8 @@ var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var osa = require('osa');
 var debug = require('debug')('meshblu-gotomeeting-osa:index');
-var GoToMeeting = require('./start-gotomeeting');
-
-osa(GoToMeeting, {}, function(error) {
-  console.log('osa complete', error);
-});
+var StartGoToMeeting = require('./start-gotomeeting');
+var EndGoToMeeting = require('./end-gotomeeting');
 
 var MESSAGE_SCHEMA = {
   type: 'object',
@@ -41,6 +38,12 @@ Plugin.prototype.onMessage = function(message) {
   debug('onMessage');
   if (message.payload.action === 'start-meeting') {
     this.startMeeting();
+    return;
+  }
+
+  if (message.payload.action === 'end-meeting') {
+    this.endMeeting();
+    return;
   }
 };
 
@@ -55,9 +58,16 @@ Plugin.prototype.setOptions = function(options) {
 Plugin.prototype.startMeeting = function() {
   debug('startMeeting')
 
-  osa(GoToMeeting, {}, function() {
-    debug('osa script done');
-    process.exit(0);
+  osa(StartGoToMeeting, {}, function(error) {
+    debug('osa script done', error);
+  });
+};
+
+Plugin.prototype.endMeeting = function() {
+  debug('endMeeting')
+
+  osa(EndGoToMeeting, {}, function(error) {
+    debug('osa script done', error);
   });
 };
 
