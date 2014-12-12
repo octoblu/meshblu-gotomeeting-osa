@@ -1,0 +1,16 @@
+{
+  "name": "meshblu-gotomeeting-osa",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node command.js"
+  },
+  "dependencies": {
+    "debug": "^2.1.0",
+    "osa": "^2.1.0",
+    "skynet": "^1.1.1"
+  },
+  "keywords": [
+    "meshblu-connector",
+    "gateblu"
+  ]
+}
