@@ -30,12 +30,18 @@ function Plugin() {
   this.options = {};
   this.messageSchema = MESSAGE_SCHEMA;
   this.optionsSchema = OPTIONS_SCHEMA;
+  this.attendees = [];
   return this;
 }
 util.inherits(Plugin, EventEmitter);
 
 Plugin.prototype.onMessage = function(message) {
   debug('onMessage');
+
+  if (message.payload.action === 'add-attendee') {
+    this.addAttendee(message.payload.email);
+  }
+
   if (message.payload.action === 'start-meeting') {
     this.startMeeting();
     return;
@@ -79,12 +85,16 @@ Plugin.prototype.endMeeting = function() {
   self.emit('message', { topic: 'message', devices: '*', status: 'meeting-ending' });
   self.meetingInProgress = false;  
   osa(EndGoToMeeting, {}, function(error) {
-    self.emit('message', { topic: 'message', devices: '*', status: 'meeting-ended' });
+    self.emit('message', { topic: 'message', devices: '*', status: 'meeting-ended', attendees: self.attendees });
+    self.attendees = [];
     debug('osa script done', error);
   });
 };
 
-
+Plugin.prototype.addAttendee = function(email){
+  this.attendees.push(email);
+  this.attendees = _.uniq(this.attendees);
+}
 
 module.exports = {
   messageSchema: MESSAGE_SCHEMA,
