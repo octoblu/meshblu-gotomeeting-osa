@@ -57,6 +57,10 @@ Plugin.prototype.setOptions = function(options) {
 
 Plugin.prototype.startMeeting = function() {
   debug('startMeeting')
+  if(this.meetingInProgress){
+    return;
+  }
+  this.meetingInProgress = true;
 
   osa(StartGoToMeeting, {}, function(error) {
     debug('osa script done', error);
@@ -65,6 +69,10 @@ Plugin.prototype.startMeeting = function() {
 
 Plugin.prototype.endMeeting = function() {
   debug('endMeeting')
+  if(!this.meetingInProgress){
+    return;
+  }
+  this.meetingInProgress = false;
 
   osa(EndGoToMeeting, {}, function(error) {
     debug('osa script done', error);
