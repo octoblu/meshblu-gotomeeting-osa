@@ -2,6 +2,7 @@
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var osa = require('osa');
+var _ = require('lodash');
 var debug = require('debug')('meshblu-gotomeeting-osa:index');
 var StartGoToMeeting = require('./start-gotomeeting');
 var EndGoToMeeting = require('./end-gotomeeting');
@@ -39,7 +40,7 @@ Plugin.prototype.onMessage = function(message) {
   debug('onMessage');
 
   if (message.payload.action === 'add-attendee') {
-    this.addAttendee(message.payload.email);
+    this.addAttendee(message.payload.newPerson);
   }
 
   if (message.payload.action === 'start-meeting') {
