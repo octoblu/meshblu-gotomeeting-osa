@@ -56,25 +56,30 @@ Plugin.prototype.setOptions = function(options) {
 };
 
 Plugin.prototype.startMeeting = function() {
+  var self = this;
   debug('startMeeting')
-  if(this.meetingInProgress){
+  if(self.meetingInProgress){
     return;
   }
-  this.meetingInProgress = true;
+  self.emit('message', { topic: 'message', devices: '*', status: 'meeting-starting' });
+  self.meetingInProgress = true;
 
   osa(StartGoToMeeting, {}, function(error) {
+    self.emit('message', { topic: 'message', devices: '*', status: 'meeting-started' });
     debug('osa script done', error);
   });
 };
 
 Plugin.prototype.endMeeting = function() {
+  var self = this;
   debug('endMeeting')
-  if(!this.meetingInProgress){
+  if(!self.meetingInProgress){
     return;
   }
-  this.meetingInProgress = false;
-
+  self.emit('message', { topic: 'message', devices: '*', status: 'meeting-ending' });
+  self.meetingInProgress = false;  
   osa(EndGoToMeeting, {}, function(error) {
+    self.emit('message', { topic: 'message', devices: '*', status: 'meeting-ended' });
     debug('osa script done', error);
   });
 };
