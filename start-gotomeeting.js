@@ -40,8 +40,13 @@ module.exports = (function() {
       while (self.GoToMeeting.windows[1].groups.length < 5) {
         delay(1);
       }
-      while (!self.GoToMeeting.windows[1].groups[4].checkboxes[0].enabled()) {
-        delay(1);
+
+      var screenSharingDescriptors = self.GoToMeeting.windows[1].uiElements.whose({_and: [{role : 'AxDisclosureTriangle'}, {description : {_contains : 'Screen Sharing'}}]}); 
+      if(screenSharingDescriptors){
+        if(screenSharingDescriptors[0].value() === 0){
+          screenSharingDescriptors[0].click(); 
+          delay(1); 
+        }
       }
     });
 
