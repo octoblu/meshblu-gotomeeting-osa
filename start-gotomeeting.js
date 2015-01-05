@@ -18,11 +18,11 @@ module.exports = (function() {
     });
 
     self.clickMeetNow = (function(){
-      var numButts = self.GoToMeeting.windows[0].groups[3].buttons.length;
-      for(var i=0; i < numButts; i++) {
+      var numGroups = self.GoToMeeting.windows[0].groups.length;
+      for(var i=0; i < numGroups; i++) {
         var button = self.GoToMeeting.windows[0].groups[3].buttons[i];
         if(button.title() === "Meet Now") {
-          self.GoToMeeting.windows[0].groups[3].buttons[0].click();
+          button.click();
           return;
         }
       }
@@ -44,8 +44,9 @@ module.exports = (function() {
       var screenSharingDescriptors = self.GoToMeeting.windows[1].uiElements.whose({_and: [{role : 'AxDisclosureTriangle'}, {description : {_contains : 'Screen Sharing'}}]}); 
       if(screenSharingDescriptors){
         if(screenSharingDescriptors[0].value() === 0){
+          console.log('openRecordWindow');
           screenSharingDescriptors[0].click(); 
-          delay(1); 
+          waitForRecordButton();
         }
       }
     });
