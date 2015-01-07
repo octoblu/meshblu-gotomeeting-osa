@@ -13,6 +13,7 @@ module.exports = (function() {
       self.clickMeetNow();
 
       self.waitForSecondWindow();
+      self.openRecordWindow();
       self.waitForRecordButton();
       self.startRecording();
     });
@@ -36,17 +37,18 @@ module.exports = (function() {
 
     self.waitForRecordButton = (function() {
       console.log('waitForRecordButton');
-      var index = self.GoToMeeting.windows[1].groups.length - 1;
-      while (self.GoToMeeting.windows[1].groups.length < 5) {
+      var connectingToAudioText = self.GoToMeeting.windows[1].uiElements.whose({_and: [{role : 'AxStaticText'}, {value : {_contains : 'Connecting to Audio'}}]});
+      while (connectingToAudioText.length > 0){
         delay(1);
       }
+    });
 
+    self.openRecordWindow = (function(){
       var screenSharingDescriptors = self.GoToMeeting.windows[1].uiElements.whose({_and: [{role : 'AxDisclosureTriangle'}, {description : {_contains : 'Screen Sharing'}}]}); 
       if(screenSharingDescriptors){
         if(screenSharingDescriptors[0].value() === 0){
           console.log('openRecordWindow');
           screenSharingDescriptors[0].click(); 
-          waitForRecordButton();
         }
       }
     });
