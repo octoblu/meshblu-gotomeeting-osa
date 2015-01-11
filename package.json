@@ -1,6 +1,6 @@
 {
   "name": "meshblu-gotomeeting-osa",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "scripts": {
     "start": "node command.js"
   },
@@ -8,7 +8,7 @@
     "debug": "^2.1.0",
     "lodash": "^2.4.1",
     "osa": "^2.1.0",
-    "skynet": "^1.1.1"
+    "meshblu": "^1.9.0"
   },
   "keywords": [
     "meshblu-connector",
