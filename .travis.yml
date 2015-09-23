@@ -7,9 +7,9 @@ deploy:
   - provider: npm
     skip_cleanup: true
     clean_up: false
-    email: replace-me
+    email: serveradmin@octoblu.com
     api_key:
-      secure: replace-me
+      secure: "aAvDFMV6/bULJ7zpFXklE/VtSyOi9Jp4T0aS+p3uWqaJOpCkmH2NjB1//8K8e2xLwjKCbgt+P19lL4Pb2i55MJQYqrAo6ecsrB626pKM/RisW/rReyyyDo1XG7wJo9aoySaGvrZC44k9yp4rpY6IpfamAZDWB61s61LCgrZfXj8="
     on:
       tags: true
       all_branches: true
