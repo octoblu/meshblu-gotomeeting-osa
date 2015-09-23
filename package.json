@@ -1,7 +1,7 @@
 {
   "name": "meshblu-gotomeeting-osa",
   "repository": "octoblu/meshblu-gotomeeting-osa",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "connector.js",
   "scripts": {
     "preinstall": "node -e \"try{require('./skip-install.js')}catch(e){}\"",
